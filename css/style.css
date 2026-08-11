@@ -1275,7 +1275,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; }
 }
 .footer-nav a:hover { color: var(--clr-white); }
 .footer-contact p { font-size: 0.88rem; color: rgba(255,255,255,0.5); margin-bottom: 0.65rem; }
-.footer-contact a { color: rgba(255,255,255,0.5); transition: color 0.2s; }
+.footer-contact a { color: white; transition: color 0.2s; }
 .footer-contact a:hover { color: var(--clr-white); }
 .footer-wa {
   display: inline-flex;
