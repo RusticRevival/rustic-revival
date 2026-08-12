@@ -378,7 +378,7 @@ function initMagnetic() {
    8. SCROLL ANIMATIONS (GSAP ScrollTrigger)
 ──────────────────────────────────────────── */
 function initScrollAnimations() {
-  gsap.registerPlugin(ScrollTrigger);
+  // gsap.registerPlugin(ScrollTrigger);
 
   // Generic fade-up for sections
   gsap.utils.toArray('.service-card, .why-card, .process-step').forEach((el, i) => {
@@ -1035,6 +1035,7 @@ function initPlaceholders() {
    INIT — Run Everything
 ──────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger); 
   // Prevent flash
   document.documentElement.classList.add('scroll-locked');
 
