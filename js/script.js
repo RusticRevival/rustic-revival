@@ -24,10 +24,33 @@ function debounce(fn, ms = 100) {
    1. LENIS SMOOTH SCROLL
 ──────────────────────────────────────────── */
 let lenis;
+// function initLenis() {
+//   lenis = new Lenis({
+//     duration: 1.2,
+//     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+//     orientation: 'vertical',
+//     gestureOrientation: 'vertical',
+//     smoothWheel: true,
+//     wheelMultiplier: 0.9,
+//     touchMultiplier: 1.5,
+//   });
+
+//   function raf(time) {
+//     lenis.raf(time);
+//     requestAnimationFrame(raf);
+//   }
+//   requestAnimationFrame(raf);
+
+//   // Hook GSAP ScrollTrigger
+//   lenis.on('scroll', ScrollTrigger.update);
+//   gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+//   gsap.ticker.lagSmoothing(0);
+// }
+
 function initLenis() {
   lenis = new Lenis({
     duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    easing: (t) => 1 - Math.pow(1 - t, 4),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
@@ -35,17 +58,15 @@ function initLenis() {
     touchMultiplier: 1.5,
   });
 
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
-
-  // Hook GSAP ScrollTrigger
   lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+
   gsap.ticker.lagSmoothing(0);
 }
+
 
 /* ────────────────────────────────────────────
    2. PAGE LOADER
@@ -393,25 +414,27 @@ function initScrollAnimations() {
     );
   });
 
+//Commented as these two section is commented in index.html
+   
   // Process line fill
-  ScrollTrigger.create({
-    trigger: '.process-track',
-    start: 'top 70%',
-    onEnter: () => {
-      const fill = document.getElementById('processLineFill');
-      if (fill) { fill.style.width = '100%'; }
-      document.querySelectorAll('.process-step').forEach((s, i) => {
-        setTimeout(() => s.classList.add('active'), i * 280);
-      });
-    }
-  });
+  // ScrollTrigger.create({
+  //   trigger: '.process-track',
+  //   start: 'top 70%',
+  //   onEnter: () => {
+  //     const fill = document.getElementById('processLineFill');
+  //     if (fill) { fill.style.width = '100%'; }
+  //     document.querySelectorAll('.process-step').forEach((s, i) => {
+  //       setTimeout(() => s.classList.add('active'), i * 280);
+  //     });
+  //   }
+  // });
 
-  // Stats counters
-  ScrollTrigger.create({
-    trigger: '.about-stats',
-    start: 'top 80%',
-    onEnter: animateCounters,
-  });
+  // // Stats counters
+  // ScrollTrigger.create({
+  //   trigger: '.about-stats',
+  //   start: 'top 80%',
+  //   onEnter: animateCounters,
+  // });
 }
 
 /* ────────────────────────────────────────────
