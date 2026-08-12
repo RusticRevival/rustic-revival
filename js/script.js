@@ -23,7 +23,7 @@ function debounce(fn, ms = 100) {
 /* ────────────────────────────────────────────
    1. LENIS SMOOTH SCROLL
 ──────────────────────────────────────────── */
-let lenis;
+// let lenis;
 // function initLenis() {
 //   lenis = new Lenis({
 //     duration: 1.2,
@@ -47,6 +47,8 @@ let lenis;
 //   gsap.ticker.lagSmoothing(0);
 // }
 
+let lenis;
+
 function initLenis() {
   lenis = new Lenis({
     duration: 1.2,
@@ -55,7 +57,7 @@ function initLenis() {
     gestureOrientation: 'vertical',
     smoothWheel: true,
     wheelMultiplier: 0.9,
-    touchMultiplier: 1.5,
+    touchMultiplier: 1.5
   });
 
   lenis.on('scroll', ScrollTrigger.update);
@@ -233,18 +235,38 @@ function initHeroArtwork() {
 /* ────────────────────────────────────────────
    4. HERO ENTRANCE ANIMATIONS
 ──────────────────────────────────────────── */
+// function initHeroAnimations() {
+//   const lines = document.querySelectorAll('.hero-headline .reveal-line');
+//   const eyebrow = document.querySelector('.hero-eyebrow');
+//   const sub = document.querySelector('.hero-sub');
+//   const ctas = document.querySelector('.hero-ctas');
+
+//   const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+//   tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.9, delay: 0.1 })
+//     .to(lines, { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, '-=0.5')
+//     .to(sub, { opacity: 1, y: 0, duration: 0.9 }, '-=0.5')
+//     .to(ctas, { opacity: 1, y: 0, duration: 0.9 }, '-=0.6');
+// }
+
 function initHeroAnimations() {
-  const lines = document.querySelectorAll('.hero-headline .reveal-line');
-  const eyebrow = document.querySelector('.hero-eyebrow');
-  const sub = document.querySelector('.hero-sub');
-  const ctas = document.querySelector('.hero-ctas');
+  const heroContent = document.querySelector('.hero-content');
 
-  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+  if (!heroContent) return;
 
-  tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.9, delay: 0.1 })
-    .to(lines, { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, '-=0.5')
-    .to(sub, { opacity: 1, y: 0, duration: 0.9 }, '-=0.5')
-    .to(ctas, { opacity: 1, y: 0, duration: 0.9 }, '-=0.6');
+  gsap.fromTo(
+    heroContent,
+    {
+      opacity: 0,
+      y: 30
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      ease: 'power3.out'
+    }
+  );
 }
 
 /* ────────────────────────────────────────────
@@ -375,14 +397,36 @@ function initScrollAnimations() {
   });
 
   // About section
-  ScrollTrigger.create({
-    trigger: '.about',
-    start: 'top 75%',
-    onEnter: () => {
-      gsap.fromTo('.about-visual', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 1, ease: 'power3.out' });
-      gsap.fromTo('.about-content > *', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out', delay: 0.2 });
+  // ScrollTrigger.create({
+  //   trigger: '.about',
+  //   start: 'top 75%',
+  //   onEnter: () => {
+  //     gsap.fromTo('.about-visual', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 1, ease: 'power3.out' });
+  //     gsap.fromTo('.about-content > *', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out', delay: 0.2 });
+  //   }
+  // });
+
+   ScrollTrigger.create({
+  trigger: '.about',
+  start: 'top 75%',
+  onEnter: () => {
+    const aboutContent = document.querySelectorAll('.about-content > *');
+
+    if (aboutContent.length) {
+      gsap.fromTo(
+        aboutContent,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power3.out'
+        }
+      );
     }
-  });
+  }
+});
 
   // Custom art section
   ScrollTrigger.create({
@@ -802,18 +846,37 @@ function initSwiper() {
 /* ────────────────────────────────────────────
    13. PARALLAX — Hero & Sections
 ──────────────────────────────────────────── */
+// function initParallax() {
+//   // Hero content subtle parallax
+//   ScrollTrigger.create({
+//     trigger: '.hero',
+//     start: 'top top',
+//     end: 'bottom top',
+//     onUpdate: self => {
+//       const p = self.progress;
+//       gsap.set('.hero-content', { y: p * 80 });
+//       gsap.set('.hero-canvas', { y: p * 40 });
+//     }
+//   });
+
 function initParallax() {
-  // Hero content subtle parallax
-  ScrollTrigger.create({
-    trigger: '.hero',
-    start: 'top top',
-    end: 'bottom top',
-    onUpdate: self => {
-      const p = self.progress;
-      gsap.set('.hero-content', { y: p * 80 });
-      gsap.set('.hero-canvas', { y: p * 40 });
-    }
-  });
+  // Hero parallax
+  const hero = document.querySelector('.hero');
+  const heroContent = document.querySelector('.hero-content');
+
+  if (hero && heroContent) {
+    ScrollTrigger.create({
+      trigger: hero,
+      start: 'top top',
+      end: 'bottom top',
+      onUpdate: (self) => {
+        gsap.set(heroContent, {
+          y: self.progress * 80
+        });
+      }
+    });
+  }
+}
 
   // About image parallax
   ScrollTrigger.create({
