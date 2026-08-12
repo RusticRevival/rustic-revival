@@ -858,6 +858,16 @@ function initSwiper() {
 //       gsap.set('.hero-canvas', { y: p * 40 });
 //     }
 //   });
+// About image parallax
+//   ScrollTrigger.create({
+//     trigger: '.about',
+//     start: 'top bottom',
+//     end: 'bottom top',
+//     onUpdate: self => {
+//       gsap.set('.about-image-frame', { y: (self.progress - 0.5) * -40 });
+//     }
+//   });
+// }
 
 function initParallax() {
   // Hero parallax
@@ -878,16 +888,7 @@ function initParallax() {
   }
 }
 
-  // About image parallax
-  ScrollTrigger.create({
-    trigger: '.about',
-    start: 'top bottom',
-    end: 'bottom top',
-    onUpdate: self => {
-      gsap.set('.about-image-frame', { y: (self.progress - 0.5) * -40 });
-    }
-  });
-}
+  
 
 /* ────────────────────────────────────────────
    14. INTERSECTION OBSERVER — Generic Fade
